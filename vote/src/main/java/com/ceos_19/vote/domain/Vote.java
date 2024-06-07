@@ -2,6 +2,7 @@ package com.ceos_19.vote.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,19 @@ public class Vote {
     @Column(name = "vote_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)       // 투표 이름
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "votingOption_id")
+    private VotingOption votingOption;
+
+
+    @Builder
+    public Vote(User user, VotingOption votingOption) {
+        this.user = user;
+        this.votingOption = votingOption;
+    }
 
 }

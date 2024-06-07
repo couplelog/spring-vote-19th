@@ -24,10 +24,6 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Part part;
