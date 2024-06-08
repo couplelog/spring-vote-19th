@@ -22,7 +22,7 @@ public class VoteController {
     /**
      * User가 투표 요청
      */
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Long> createVote (
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody @Valid final CreateVoteRequest createVoteRequest){

@@ -9,6 +9,8 @@ import com.ceos_19.vote.common.enumSet.LoginType;
 import com.ceos_19.vote.common.enumSet.UserRoleEnum;
 import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.common.jwt.JwtUtil;
+import com.ceos_19.vote.domain.Part;
+import com.ceos_19.vote.domain.Team;
 import com.ceos_19.vote.domain.User;
 import com.ceos_19.vote.dto.LoginRequestsDto;
 import com.ceos_19.vote.dto.SignupRequestDto;
@@ -34,16 +36,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    private final ConcurrentHashMap<String, String> emailCodeMap = new ConcurrentHashMap<>();
-
-
-
-    @Transactional
     public ApiResponseDto<SuccessResponse> signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
@@ -53,15 +51,14 @@ public class UserService {
         if (userOptional.isPresent()) {
             throw new RestApiException(ErrorType.NOT_FOUND_USER);
         }
-
+        Part part = requestDto.getPart();
+        Team team = requestDto.getTeam();
+        String email = requestDto.getEmail();
         // 입력한 username, password, admin 으로 user 객체 만들어 repository 에 저장
         UserRoleEnum role = requestDto.getRole() ? UserRoleEnum.ADMIN : UserRoleEnum.USER;
-        User user = User.of(LoginType.NONE, username, password, role);
+        User user = User.of(LoginType.NONE, username, password, role,part, team, email );
 
         userRepository.save(user);
-
-
-
 
         return ResponseUtils.ok(SuccessResponse.of(HttpStatus.OK, "회원가입성공"), ErrorResponse.builder().status(200).message("요청 성공").build());
 

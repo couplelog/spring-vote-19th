@@ -1,8 +1,5 @@
 package com.ceos_19.vote.service;
 
-import com.ceos_19.vote.common.api.ErrorResponse;
-import com.ceos_19.vote.common.api.ResponseUtils;
-import com.ceos_19.vote.dto.EmailDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -46,7 +43,7 @@ public class EmailServiceImpl implements EmailService{
         msgg+= ePw+"</strong><div><br/> ";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("properties에 입력한 이메일","ceos"));//보내는 사람
+        message.setFrom(new InternetAddress("rtssogang@google.com","ceos"));//보내는 사람
 
         return message;
     }
@@ -85,7 +82,7 @@ public class EmailServiceImpl implements EmailService{
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-        return mimeMessageToString(message);
+        return ePw;
     }
     private String mimeMessageToString(MimeMessage message) throws IOException, MessagingException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
