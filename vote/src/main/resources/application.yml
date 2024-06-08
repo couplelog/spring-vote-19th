@@ -1,8 +1,24 @@
 spring:
+
+  mail:
+    smtp:
+      auth: true
+      starttls:
+        required: true
+        enable: true
+      socketFactory:
+        class: javax.net.ssl.SSLSocketFactory
+        fallback: false
+      port: 465
+      socketFactoryPort: 465
+    AdminMail:
+      id: rtssogang@gmail.com
+      password: ydqu rxru ozsa njrl
+
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/voting
     username: root
-    password: 123456
+    password: Ab016018!@
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -15,3 +31,6 @@ spring:
   sql:
     init:
       mode : always
+
+JWT_TOKEN : 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA
+

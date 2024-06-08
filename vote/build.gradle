@@ -1,7 +1,8 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.0'
+	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.5'
+
 }
 
 group = 'com.ceos-19'
@@ -30,12 +31,19 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'org.springframework:spring-context-support'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33' // 여기 수정
 	implementation 'com.h2database:h2'
 	testCompileOnly 'junit:junit:4.13.2'
-
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.5'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework:spring-context:6.0.7'
+	implementation 'org.springframework:spring-context-support:6.0.7'
+	implementation 'com.sun.mail:jakarta.mail:2.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.3'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2' //swagger
 
 }
