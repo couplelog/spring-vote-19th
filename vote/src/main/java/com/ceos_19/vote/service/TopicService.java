@@ -1,5 +1,7 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.enumSet.ErrorType;
+import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
 import com.ceos_19.vote.domain.VotingOption;
 import com.ceos_19.vote.dto.VotingOptionCountResponse;
@@ -40,7 +42,7 @@ public class TopicService {
     public TopicResponse getTopicById(Long id) {
 
         Topic topic = topicRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Topic is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
 
         return TopicResponse.of(topic);
     }
@@ -49,24 +51,23 @@ public class TopicService {
     public VotingOption getTopVotedOption(Long topicId) {
 
         Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
         List<VotingOption> votingOptions = votingOptionRepository.findVotingOptionByTopic(topic);
 
         int totalVotes = votingOptions.stream().mapToInt(VotingOption::getVote_count).sum();
         if (totalVotes < topic.getMinimumVotesRequired()) {
-            throw new RuntimeException("Not enough votes to show results");
+            throw new RestApiException(ErrorType.INSUFFICIENT_VOTINGOPTION);
         }
 
         return votingOptionRepository.findTopByTopicOrderByVoteCountDesc(topic)
-                .orElseThrow(() -> new RuntimeException("No voting options found for this topic"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION));
     }
 
     @Transactional(readOnly = true)
     public List<VotingOptionCountResponse> getCurrentResults(Long topicId){
 
         Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic is not found"));
-        List<VotingOption> votingOptions = votingOptionRepository.findVotingOptionByTopic(topic);
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
 
         return votingOptionRepository.findVotingOptionSummariesByTopicId(topicId);
     }

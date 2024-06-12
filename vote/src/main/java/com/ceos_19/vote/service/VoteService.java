@@ -1,5 +1,7 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.enumSet.ErrorType;
+import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
 import com.ceos_19.vote.domain.User;
 import com.ceos_19.vote.domain.Vote;
@@ -30,11 +32,11 @@ public class VoteService {
     public Long createVote(UserDetails userDetails, CreateVoteRequest createVoteRequest){
 
         final User voter = userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_USER));
         final Topic topic = topicRepository.findById(createVoteRequest.getTopicId())
-                .orElseThrow(() -> new RuntimeException("Topic is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
         final VotingOption votingOption = votingOptionRepository.findById(createVoteRequest.getVotingOptionId())
-                .orElseThrow(() -> new RuntimeException("Voting Option is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION));
 
         topic.addVotingOption(votingOption);       // 투표수 증가
 

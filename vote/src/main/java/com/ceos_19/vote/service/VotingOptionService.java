@@ -1,5 +1,7 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.enumSet.ErrorType;
+import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
 import com.ceos_19.vote.domain.VotingOption;
 import com.ceos_19.vote.dto.VotingOptionResponse;
@@ -28,7 +30,7 @@ public class VotingOptionService {
         List<VotingOption> votingOptions = votingOptionRepository.findAll();
 
         if (votingOptions.isEmpty()) {
-            throw new IllegalStateException("No voting options found.");
+            throw new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION);
         }
 
         return votingOptions.stream()
@@ -41,7 +43,7 @@ public class VotingOptionService {
 
         return VotingOptionResponse.of(
                 votingOptionRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Voting Option is not found"))
+                    .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION))
         );
     }
 
@@ -49,11 +51,14 @@ public class VotingOptionService {
     public List<VotingOptionResponse> getOptionsByTopicId(Long id) {
 
         final Topic topic = topicRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Topic is not found"));
+                .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
 
-        return votingOptionRepository
-                .findVotingOptionByTopic(topic)
-                .stream()
+        List<VotingOption> votingOptions = votingOptionRepository.findVotingOptionByTopic(topic);
+        if (votingOptions.isEmpty()) {
+            throw new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION);
+        }
+
+        return votingOptions.stream()
                 .map(VotingOptionResponse::of)
                 .collect(Collectors.toList());
     }
