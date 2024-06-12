@@ -27,6 +27,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor('org.projectlombok:lombok')			// 오류 추가
+	testAnnotationProcessor('org.projectlombok:lombok')		// 오류 추가
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -34,6 +37,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33' // 여기 수정
+	//runtimeOnly 'com.mysql:mysql-connector-j'
 	//implementation 'com.h2database:h2'
 	testCompileOnly 'junit:junit:4.13.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
