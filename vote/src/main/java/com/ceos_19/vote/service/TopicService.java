@@ -52,7 +52,7 @@ public class TopicService {
                 .orElseThrow(() -> new RuntimeException("Topic is not found"));
         List<VotingOption> votingOptions = votingOptionRepository.findVotingOptionByTopic(topic);
 
-        int totalVotes = votingOptions.stream().mapToInt(VotingOption::getVoteCount).sum();
+        int totalVotes = votingOptions.stream().mapToInt(VotingOption::getVote_count).sum();
         if (totalVotes < topic.getMinimumVotesRequired()) {
             throw new RuntimeException("Not enough votes to show results");
         }

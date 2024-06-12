@@ -14,10 +14,10 @@ public interface VotingOptionRepository extends JpaRepository<VotingOption, Long
 
     List<VotingOption> findVotingOptionByTopic(Topic topic);
 
-    @Query("SELECT v FROM VotingOption v WHERE v.topic = :topic ORDER BY v.voteCount DESC")
+    @Query("SELECT v FROM VotingOption v WHERE v.topic = :topic ORDER BY v.vote_count DESC")
     Optional<VotingOption> findTopByTopicOrderByVoteCountDesc(@Param("topic") Topic topic);
 
-    @Query("SELECT vo.id as id, vo.voteCount as voteCount FROM VotingOption vo WHERE vo.topic.id = :topicId")
+    @Query("SELECT vo.id as id, vo.vote_count as voteCount FROM VotingOption vo WHERE vo.topic.id = :topicId")
     List<VotingOptionCountResponse> findVotingOptionSummariesByTopicId(Long topicId);
 
 }

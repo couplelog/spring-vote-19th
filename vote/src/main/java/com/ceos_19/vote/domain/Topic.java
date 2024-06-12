@@ -25,7 +25,7 @@ public class Topic {
     @Column(nullable = false)
     private int minimumVotesRequired; // 최소 투표 요구 수
 
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VotingOption> votingOptions = new ArrayList<>();
 
 
@@ -34,6 +34,12 @@ public class Topic {
         this.name = name;
         this.minimumVotesRequired = 10;
         votingOptions = new ArrayList<>();
+    }
+
+    public void addVotingOption(VotingOption votingOption) {
+        if (votingOption != null) {
+            this.votingOptions.add(votingOption);
+        }
     }
 
     public void increaseVotingOption(VotingOption votingOption){

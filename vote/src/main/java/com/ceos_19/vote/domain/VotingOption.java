@@ -2,6 +2,7 @@ package com.ceos_19.vote.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,23 +21,31 @@ public class VotingOption {
     @Column(nullable = false, unique = true, length = 20)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
+    //@JsonIgnore
     private Topic topic;
 
     @OneToMany(mappedBy = "votingOption")
     private List<Vote> votes;
 
     @Column
-    private int voteCount = 0;
+    private int vote_count = 0;
 
+    @Builder
+    public VotingOption(String name, Topic topic) {
+        this.name = name;
+        this.topic = topic;
+    }
 
     public void addVote(Vote vote) {
         if (votes != null) {
             votes.add(vote);
-            voteCount++;
+            vote_count++;
         }
     }
 
-
+    public void setVote_count(int vote_count) {
+        this.vote_count = vote_count;
+    }
 }

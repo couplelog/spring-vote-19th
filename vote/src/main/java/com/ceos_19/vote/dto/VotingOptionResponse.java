@@ -25,7 +25,7 @@ public class VotingOptionResponse {
                votingOption.getName(),
                votingOption.getTopic(),
                votingOption.getVotes(),
-               votingOption.getVoteCount()
+               votingOption.getVote_count()
        );
     }
 
