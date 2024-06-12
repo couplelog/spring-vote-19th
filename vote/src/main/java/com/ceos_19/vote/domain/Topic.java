@@ -32,17 +32,11 @@ public class Topic {
     @Builder
     public Topic(String name, int minimumVotesRequired){
         this.name = name;
-        this.minimumVotesRequired = 10;
+        this.minimumVotesRequired = minimumVotesRequired;
         votingOptions = new ArrayList<>();
     }
 
-    public void addVotingOption(VotingOption votingOption) {
-        if (votingOption != null) {
-            this.votingOptions.add(votingOption);
-        }
-    }
-
-    public void increaseVotingOption(VotingOption votingOption){
+    public void addVotingOption(VotingOption votingOption){
         if(this.votingOptions != null){
             this.votingOptions.add(votingOption);
         }

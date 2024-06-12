@@ -36,7 +36,7 @@ public class VoteService {
         final VotingOption votingOption = votingOptionRepository.findById(createVoteRequest.getVotingOptionId())
                 .orElseThrow(() -> new RuntimeException("Voting Option is not found"));
 
-        topic.increaseVotingOption(votingOption);       // 투표수 증가
+        topic.addVotingOption(votingOption);       // 투표수 증가
 
         Vote vote = Vote.builder()
                 .user(voter)
