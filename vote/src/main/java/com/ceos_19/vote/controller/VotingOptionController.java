@@ -1,5 +1,6 @@
 package com.ceos_19.vote.controller;
 
+import com.ceos_19.vote.common.api.ApiResponseDto;
 import com.ceos_19.vote.dto.VotingOptionResponse;
 import com.ceos_19.vote.service.VotingOptionService;
 import lombok.RequiredArgsConstructor;
@@ -22,30 +23,27 @@ public class VotingOptionController {
      * 모든 투표 선택지 반환
      */
     @GetMapping
-    public ResponseEntity<List<VotingOptionResponse>> getAllOptions() {
+    public ApiResponseDto<List<VotingOptionResponse>> getAllOptions() {
 
-        return ResponseEntity.ok()
-                .body(votingOptionService.getAllOptions());
+        return votingOptionService.getAllOptions();
     }
 
     /**
      * 하나의 투표 선택지 반환
      */
     @GetMapping("/{id}")
-    public ResponseEntity<VotingOptionResponse> getOption(@PathVariable Long id) {
+    public ApiResponseDto<VotingOptionResponse> getOption(@PathVariable Long id) {
 
-        return ResponseEntity.ok()
-                .body(votingOptionService.getOption(id));
+        return votingOptionService.getOption(id);
     }
 
     /**
      * 한 Topic의 모든 투표선택지 반환
      */
-    @GetMapping("/topic/{id}")
-    public ResponseEntity<List<VotingOptionResponse>> getOptionsByTopicId(@PathVariable Long id) {
+    @GetMapping("/topics/{id}")
+    public ApiResponseDto<List<VotingOptionResponse>> getOptionsByTopicId(@PathVariable Long id) {
 
-        return ResponseEntity.ok()
-                .body(votingOptionService.getOptionsByTopicId(id));
+        return votingOptionService.getOptionsByTopicId(id);
     }
 
 

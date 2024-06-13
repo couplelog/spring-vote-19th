@@ -1,5 +1,9 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.api.ApiResponseDto;
+import com.ceos_19.vote.common.api.ErrorResponse;
+import com.ceos_19.vote.common.api.ResponseUtils;
+import com.ceos_19.vote.common.api.SuccessResponse;
 import com.ceos_19.vote.common.enumSet.ErrorType;
 import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
@@ -9,6 +13,7 @@ import com.ceos_19.vote.repository.TopicRepository;
 import com.ceos_19.vote.repository.VotingOptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ceos_19.vote.dto.TopicResponse;
@@ -26,7 +31,7 @@ public class TopicService {
     private final VotingOptionRepository votingOptionRepository;
 
     @Transactional(readOnly = true)
-    public List<TopicResponse> getAllTopics(){
+    public ApiResponseDto<List<TopicResponse>> getAllTopics(){
 
         List<Topic> topics = topicRepository.findAll();
         List<TopicResponse> topicResponses = new ArrayList<>();
@@ -34,20 +39,20 @@ public class TopicService {
             topicResponses.add(TopicResponse.of(topic));
         }
 
-        return topicResponses;
+        return ResponseUtils.ok(topicResponses, ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
     @Transactional(readOnly = true)
-    public TopicResponse getTopicById(Long id) {
+    public ApiResponseDto<TopicResponse> getTopicById(Long id) {
 
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
 
-        return TopicResponse.of(topic);
+        return ResponseUtils.ok(TopicResponse.of(topic), ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
     @Transactional(readOnly = true)
-    public VotingOption getTopVotedOption(Long topicId) {
+    public ApiResponseDto<VotingOptionCountResponse> getTopVotedOption(Long topicId) {
 
         Topic topic = topicRepository.findById(topicId)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
@@ -58,12 +63,14 @@ public class TopicService {
             throw new RestApiException(ErrorType.INSUFFICIENT_VOTINGOPTION);
         }
 
-        return votingOptionRepository.findTopByTopicOrderByVoteCountDesc(topic)
+        VotingOptionCountResponse votingOptionCountResponse = votingOptionRepository.findTopByTopicOrderByVoteCountDesc(topic)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION));
+
+        return ResponseUtils.ok(votingOptionCountResponse, ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
     @Transactional(readOnly = true)
-    public List<VotingOptionCountResponse> getCurrentResults(Long topicId){
+    public ApiResponseDto<List<VotingOptionCountResponse>> getCurrentResults(Long topicId){
 
         Topic topic = topicRepository.findById(topicId)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
@@ -74,7 +81,7 @@ public class TopicService {
             throw new RestApiException(ErrorType.NOT_FOUNT_VOTE);
         }
 
-        return currentResults;
+        return ResponseUtils.ok(currentResults, ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
 }

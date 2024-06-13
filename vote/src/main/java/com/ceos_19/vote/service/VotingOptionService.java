@@ -1,5 +1,8 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.api.ApiResponseDto;
+import com.ceos_19.vote.common.api.ErrorResponse;
+import com.ceos_19.vote.common.api.ResponseUtils;
 import com.ceos_19.vote.common.enumSet.ErrorType;
 import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
@@ -25,7 +28,7 @@ public class VotingOptionService {
     private final TopicRepository topicRepository;
 
     @Transactional(readOnly = true)
-    public List<VotingOptionResponse> getAllOptions() {
+    public ApiResponseDto<List<VotingOptionResponse>> getAllOptions() {
 
         List<VotingOption> votingOptions = votingOptionRepository.findAll();
 
@@ -33,22 +36,22 @@ public class VotingOptionService {
             throw new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION);
         }
 
-        return votingOptions.stream()
-                .map(VotingOptionResponse::of)
-                .collect(Collectors.toList());
+        return ResponseUtils.ok(votingOptions.stream().map(VotingOptionResponse::of).collect(Collectors.toList()),
+                ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
     @Transactional(readOnly = true)
-    public VotingOptionResponse getOption(Long id) {
+    public ApiResponseDto<VotingOptionResponse> getOption(Long id) {
 
-        return VotingOptionResponse.of(
+        VotingOptionResponse votingOptionResponse = VotingOptionResponse.of(
                 votingOptionRepository.findById(id)
-                    .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION))
-        );
+                        .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION)));
+
+        return ResponseUtils.ok(votingOptionResponse, ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
     @Transactional(readOnly = true)
-    public List<VotingOptionResponse> getOptionsByTopicId(Long id) {
+    public ApiResponseDto<List<VotingOptionResponse>> getOptionsByTopicId(Long id) {
 
         final Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
@@ -58,9 +61,8 @@ public class VotingOptionService {
             throw new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION);
         }
 
-        return votingOptions.stream()
-                .map(VotingOptionResponse::of)
-                .collect(Collectors.toList());
+        return ResponseUtils.ok(votingOptions.stream().map(VotingOptionResponse::of).collect(Collectors.toList()),
+                ErrorResponse.builder().status(200).message("요청 성공").build());
     }
 
 }

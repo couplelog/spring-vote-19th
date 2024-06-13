@@ -1,10 +1,11 @@
 package com.ceos_19.vote.controller;
 
+import com.ceos_19.vote.common.api.ApiResponseDto;
+import com.ceos_19.vote.common.api.SuccessResponse;
 import com.ceos_19.vote.dto.CreateVoteRequest;
 import com.ceos_19.vote.service.VoteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +24,11 @@ public class VoteController {
      * User가 투표 요청
      */
     @PostMapping("/")
-    public ResponseEntity<Long> createVote (
+    public ApiResponseDto<SuccessResponse> createVote (
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody @Valid final CreateVoteRequest createVoteRequest){
 
-        final Long voteId = voteService.createVote(userDetails, createVoteRequest);
-
-        return ResponseEntity.ok()
-                .body(voteId);
+        return voteService.createVote(userDetails, createVoteRequest);
     }
-
-
-
 
 }

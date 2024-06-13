@@ -1,5 +1,9 @@
 package com.ceos_19.vote.service;
 
+import com.ceos_19.vote.common.api.ApiResponseDto;
+import com.ceos_19.vote.common.api.ErrorResponse;
+import com.ceos_19.vote.common.api.ResponseUtils;
+import com.ceos_19.vote.common.api.SuccessResponse;
 import com.ceos_19.vote.common.enumSet.ErrorType;
 import com.ceos_19.vote.common.exception.RestApiException;
 import com.ceos_19.vote.domain.Topic;
@@ -13,6 +17,7 @@ import com.ceos_19.vote.repository.VoteRepository;
 import com.ceos_19.vote.repository.VotingOptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +34,7 @@ public class VoteService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createVote(UserDetails userDetails, CreateVoteRequest createVoteRequest){
+    public ApiResponseDto<SuccessResponse> createVote(UserDetails userDetails, CreateVoteRequest createVoteRequest){
 
         final User voter = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_USER));
@@ -46,12 +51,9 @@ public class VoteService {
                 .build();
 
         votingOption.addVote(vote);
+        voteRepository.save(vote);
 
-        return voteRepository.save(vote)
-                .getId();
+        return ResponseUtils.ok(SuccessResponse.of(HttpStatus.OK, "투표 성공"), ErrorResponse.builder().status(200).message("요청 성공").build());
     }
-
-
-
 
 }

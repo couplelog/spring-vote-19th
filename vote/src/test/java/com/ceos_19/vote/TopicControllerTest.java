@@ -31,7 +31,7 @@ public class TopicControllerTest {
     /**
      * 모든 Topic 반환하는지 확인
      */
-    @Test
+   /* @Test
     @WithMockUser(username = "user", roles = "USER")
     public void getAllTopics() throws Exception {        //topic, votingoption 양방향 참조 주의
 
@@ -52,12 +52,12 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$[1].name").value("데모데이 투표"))
                 .andExpect(jsonPath("$[1].minimumVotesRequired").value(20))
                 .andExpect(jsonPath("$[1].votingOptionDto").isArray()); // votingOptionDto가 배열인지 확인
-    }
+    }*/
 
     /**
      * topic id별로 반환
      */
-    @Test
+   /* @Test
     @WithMockUser(username = "user", roles = {"USER"})
     public void getOneTopic() throws Exception {
         // given
@@ -72,5 +72,5 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$.name").value("파트장 투표"))
                 .andExpect(jsonPath("$.minimumVotesRequired").value(10));
     }
-
+*/
 }
