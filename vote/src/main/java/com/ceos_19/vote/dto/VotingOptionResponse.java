@@ -15,16 +15,16 @@ public class VotingOptionResponse {
 
     private Long id;
     private String name;
-    private Topic topic;
-    private List<Vote> votes;
+    //private Topic topic;          // Infinite recursion
+    //private List<Vote> votes;
     private int voteCount;
 
     public static VotingOptionResponse of(VotingOption votingOption) {
        return new VotingOptionResponse(
                votingOption.getId(),
                votingOption.getName(),
-               votingOption.getTopic(),
-               votingOption.getVotes(),
+               //votingOption.getTopic(),
+               //votingOption.getVotes(),
                votingOption.getVote_count()
        );
     }

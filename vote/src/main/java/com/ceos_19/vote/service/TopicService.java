@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ceos_19.vote.dto.TopicResponse;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +68,13 @@ public class TopicService {
         Topic topic = topicRepository.findById(topicId)
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
 
-        return votingOptionRepository.findVotingOptionSummariesByTopicId(topicId);
+        List<VotingOptionCountResponse> currentResults = votingOptionRepository.findVotingOptionSummariesByTopicId(topic.getId());
+
+        if(currentResults.isEmpty()){
+            throw new RestApiException(ErrorType.NOT_FOUNT_VOTE);
+        }
+
+        return currentResults;
     }
 
 }
