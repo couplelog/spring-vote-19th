@@ -23,7 +23,7 @@ public class VoteController {
     /**
      * User가 투표 요청
      */
-    @PostMapping("/")
+    @PostMapping("")
     public ApiResponseDto<SuccessResponse> createVote (
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody @Valid final CreateVoteRequest createVoteRequest){

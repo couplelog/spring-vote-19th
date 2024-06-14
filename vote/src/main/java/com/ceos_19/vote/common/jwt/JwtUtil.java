@@ -113,19 +113,23 @@ public class JwtUtil {
     public Claims getUserInfoFromToken(String token)
     {
         String cleanToken = token.replace(BEARER_PREFIX, "");
-//        System.out.println("getUserInfoFromToken token: " + cleanToken);
+       System.out.println("getUserInfoFromToken token: " + cleanToken);
 
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(cleanToken).getBody();
 
 //        // jwt 파싱하기 위한 빌더 객체 생성 / 토큰의 서명 검증을 위해 사용할 키 설정 / 파싱 생성 / 토큰을 파싱하고 클레임을 가져옴 / 토큰의 본문을 반환
+
 //        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     // 사용자의 인증 정보를 가져온다
     public Authentication createAuthentication(String username)
     {
+        System.out.println("2312");
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         // 사용자 정보 / 자격증명 / 권환
+        System.out.println("userdetail " + userDetails);
+
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 

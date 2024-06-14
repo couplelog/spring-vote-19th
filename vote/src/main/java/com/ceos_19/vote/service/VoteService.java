@@ -36,7 +36,8 @@ public class VoteService {
     @Transactional
     public ApiResponseDto<SuccessResponse> createVote(UserDetails userDetails, CreateVoteRequest createVoteRequest){
 
-        final User voter = userRepository.findByUsername(userDetails.getUsername())
+        System.out.println(userDetails);
+        User voter = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_USER));
         final Topic topic = topicRepository.findById(createVoteRequest.getTopicId())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));

@@ -7,6 +7,8 @@ import com.ceos_19.vote.dto.VotingOptionCountResponse;
 import com.ceos_19.vote.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,8 @@ public class TopicController {
      * 하나의 Topic 반환 by TopicId
      */
     @GetMapping("/{id}")
-    public ApiResponseDto<TopicResponse> getTopic(@PathVariable Long id) {
+    public ApiResponseDto<TopicResponse> getTopic(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails loginUser
+    ) {
 
         return topicService.getTopicById(id);
     }
@@ -44,7 +47,7 @@ public class TopicController {
      * 모든 인원이 투표했을 때만 반환
      */
     @GetMapping("/{id}/top-voted-option")
-    public ApiResponseDto<VotingOptionCountResponse> getFinalResult(@PathVariable Long id) {
+    public ApiResponseDto<VotingOptionCountResponse> getFinalResult(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails loginUser) {
 
         return topicService.getTopVotedOption(id);
     }
@@ -54,7 +57,7 @@ public class TopicController {
      * 투표 인원수 확인 X
      */
     @GetMapping("/{id}/results")
-    public ApiResponseDto<List<VotingOptionCountResponse>> getCurrentResult(@PathVariable Long id) {
+    public ApiResponseDto<List<VotingOptionCountResponse>> getCurrentResult(@PathVariable("id") Long id,@AuthenticationPrincipal UserDetails loginUser) {
 
         return topicService.getCurrentResults(id);
     }

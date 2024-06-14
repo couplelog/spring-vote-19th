@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
+@NoArgsConstructor
 public class CreateVoteRequest {
 
     @NotNull(message = "투표 주제 아이디를 적어주세요.")

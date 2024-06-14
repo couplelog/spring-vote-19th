@@ -40,6 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // 유효한 토큰이라면, 토큰으로 부터 (클레임)사용자 정보를 가져온다.
 
         Claims info = jwtUtil.getUserInfoFromToken(token);
+        System.out.println(info);
         try {
             setAuthentication(info.getSubject()); //  사용자명을 반환 받아서 사용자 정보로 인증 객체 만들기 -> 현재의 SecurityContext에 설정한다
         } catch (UsernameNotFoundException e) {
@@ -52,9 +53,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     // jwt가 유효할 시 username을 사용하여서 Spring Security의 Authentication 객체를 생성하고 SecurityContext에 설정
     private void setAuthentication(String username) {
 
+        System.out.println(username);
         SecurityContext context = SecurityContextHolder.createEmptyContext(); // 비어있는 SecurityCotext객체를 생성
         Authentication authentication = jwtUtil.createAuthentication(username); // 주어진 사용자명으로 부터 UserDetails를 사져와서 UsernamePasswordAuthenticationToken 객체를 생성하여 반환한다
         ; // 인증 객체 만들기
+        System.out.println("wqewqeqw" + authentication);
         context.setAuthentication(authentication);
         // securitycontext에 authentication객체를 설정
         SecurityContextHolder.setContext(context);

@@ -32,7 +32,7 @@ public class VotingOptionController {
      * 하나의 투표 선택지 반환
      */
     @GetMapping("/{id}")
-    public ApiResponseDto<VotingOptionResponse> getOption(@PathVariable Long id) {
+    public ApiResponseDto<VotingOptionResponse> getOption(@PathVariable("id") Long id) {
 
         return votingOptionService.getOption(id);
     }
@@ -41,7 +41,7 @@ public class VotingOptionController {
      * 한 Topic의 모든 투표선택지 반환
      */
     @GetMapping("/topics/{id}")
-    public ApiResponseDto<List<VotingOptionResponse>> getOptionsByTopicId(@PathVariable Long id) {
+    public ApiResponseDto<List<VotingOptionResponse>> getOptionsByTopicId(@PathVariable("id") Long id) {
 
         return votingOptionService.getOptionsByTopicId(id);
     }
