@@ -8,7 +8,7 @@ public class ApiResponseDto<T>  {
 
     private boolean success;
     private T response;
-    private ErrorResponse error;
+    private ErrorResponse success_or_error_code;
 
 
     @Builder
@@ -16,6 +16,6 @@ public class ApiResponseDto<T>  {
     {
         this.success = success;
         this.response = response;
-        this.error = error;
+        this.success_or_error_code = error;
     }
 }

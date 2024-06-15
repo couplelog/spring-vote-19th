@@ -49,7 +49,7 @@ public class UserService {
         // 회원 중복 확인
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
-            throw new RestApiException(ErrorType.NOT_FOUND_USER);
+            throw new RestApiException(ErrorType.ALREADY_EXIST);
         }
         Part part = requestDto.getPart();
         Team team = requestDto.getTeam();
@@ -71,7 +71,7 @@ public class UserService {
         // 사용자 확인 & 비밀번호 확인
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty() || !passwordEncoder.matches(password, user.get().getPassword())) {
-            throw new RestApiException(ErrorType.NOT_FOUND);
+            throw new RestApiException(ErrorType.LOGIN_FAIL);
         }
         else {
             User loginedUser = user.orElseThrow(
