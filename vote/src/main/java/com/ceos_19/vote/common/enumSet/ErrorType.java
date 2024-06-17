@@ -16,7 +16,10 @@ public enum ErrorType {
     NOT_FOUND_VOTINGOPTION(400, "Voting Option이 존재하지 않습니다."),
     NOT_FOUNT_VOTE(400,"아직 해당 주제에 투표한 사람이 없습니다."),
     MINIMUM_VOTES_NOT_REACHED(400, "최소 투표 요구수를 충족하지 못했습니다."),
-    ALREADY_VOTED(400, "해당 사용자는 이미 해당 주제에 투표를 했습니다.")
+    ALREADY_VOTED(400, "해당 사용자는 이미 해당 주제에 투표를 했습니다."),
+    INVALID_VOTINGOPTION_TOPIC(400, "topicid와 투표선택지의 topicid가 일치하지 않습니다."),
+    INVALID_VOTINGOPTION_PART(400, "각 파트에 알맞는 유저만 투표할 수 있습니다."),
+    INVALID_VOTINGOPTION_TEAM(400, "본인 팀에는 투표할 수 없습니다.")
     ;
 
 
