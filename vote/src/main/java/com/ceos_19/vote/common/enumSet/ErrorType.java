@@ -15,7 +15,8 @@ public enum ErrorType {
     NOT_FOUND_TOPIC(400, "해당 Topic이 존재하지 않습니다."),
     NOT_FOUND_VOTINGOPTION(400, "Voting Option이 존재하지 않습니다."),
     NOT_FOUNT_VOTE(400,"아직 해당 주제에 투표한 사람이 없습니다."),
-    INSUFFICIENT_VOTINGOPTION(400, "최종 결과를 내기에는 투표자가 아직 부족합니다")
+    MINIMUM_VOTES_NOT_REACHED(400, "최소 투표 요구수를 충족하지 못했습니다."),
+    ALREADY_VOTED(400, "해당 사용자는 이미 해당 주제에 투표를 했습니다.")
     ;
 
 

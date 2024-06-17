@@ -37,21 +37,25 @@ public class VoteService {
     public ApiResponseDto<SuccessResponse> createVote(UserDetails userDetails, CreateVoteRequest createVoteRequest){
 
         System.out.println(userDetails);
-        User voter = userRepository.findByUsername(userDetails.getUsername())
+        final User voter = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_USER));
         final Topic topic = topicRepository.findById(createVoteRequest.getTopicId())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_TOPIC));
         final VotingOption votingOption = votingOptionRepository.findById(createVoteRequest.getVotingOptionId())
                 .orElseThrow(() -> new RestApiException(ErrorType.NOT_FOUND_VOTINGOPTION));
 
-        topic.addVotingOption(votingOption);       // 투표수 증가
+        // 사용자가 이미 해당 Topic에 투표했는지 확인
+        boolean alreadyVoted = voteRepository.existsByUserIdAndTopicId(voter.getId(), topic.getId());
+        if (alreadyVoted) {
+            throw new RestApiException(ErrorType.ALREADY_VOTED);
+        }
 
         Vote vote = Vote.builder()
                 .user(voter)
                 .votingOption(votingOption)
                 .build();
 
-        votingOption.addVote(vote);
+        votingOption.increaseVoteCount(vote);
         voteRepository.save(vote);
 
         return ResponseUtils.ok(SuccessResponse.of(HttpStatus.OK, "투표 성공"), ErrorResponse.builder().status(200).message("요청 성공").build());

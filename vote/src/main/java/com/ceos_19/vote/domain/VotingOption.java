@@ -38,7 +38,7 @@ public class VotingOption {
         this.topic = topic;
     }
 
-    public void addVote(Vote vote) {
+    public void increaseVoteCount(Vote vote) {
         if (votes != null) {
             votes.add(vote);
             vote_count++;
