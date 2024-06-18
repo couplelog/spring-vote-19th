@@ -34,7 +34,7 @@ public class TopicController {
      * 하나의 Topic 반환 by TopicId
      */
     @GetMapping("/{id}")
-    public ApiResponseDto<TopicResponse> getTopic(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails loginUser
+    public ApiResponseDto<TopicResponse> getTopic(@PathVariable("id") Long id
     ) {
 
         return topicService.getTopicById(id);
@@ -45,7 +45,7 @@ public class TopicController {
      * 정해진 모든 인원이 투표했을 때만 반환
      */
     @GetMapping("/{id}/top-voted-option")
-    public ApiResponseDto<List<VotingOptionCountResponse>> getFinalResult(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails loginUser) {
+    public ApiResponseDto<List<VotingOptionCountResponse>> getFinalResult(@PathVariable("id") Long id) {
 
         return topicService.getTopVotedOption(id);
     }
@@ -55,7 +55,7 @@ public class TopicController {
      * 정해진 모든 인원이 투표하지 않아도 반환 => 현황을 확인할 수 있음
      */
     @GetMapping("/{id}/results")
-    public ApiResponseDto<List<VotingOptionCountResponse>> getCurrentResult(@PathVariable("id") Long id,@AuthenticationPrincipal UserDetails loginUser) {
+    public ApiResponseDto<List<VotingOptionCountResponse>> getCurrentResult(@PathVariable("id") Long id) {
 
         return topicService.getCurrentResults(id);
     }

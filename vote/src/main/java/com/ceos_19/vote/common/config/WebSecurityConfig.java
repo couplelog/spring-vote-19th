@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/api/topics/**").permitAll()
                                 .requestMatchers("/api/votingoptions/**").permitAll()
-                                .requestMatchers("/api/votes/**").permitAll()
+                                //.requestMatchers("/api/votes/**").permitAll()
                                 .anyRequest().authenticated()
 
 
