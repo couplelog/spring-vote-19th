@@ -16,21 +16,29 @@ spring:
       password: ydqu rxru ozsa njrl
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/voting
-    username: root
-    password: Ab016018!@
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/voting?createDatabaseIfNotExist=true     # DB 없으면 자동 생성
+    username: root
+    #password: Ab016018!@
+    password: 123456
+
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true   # 데이터 베이스 초기화 시점을 지연
+      ddl-auto: update
+    defer-datasource-initialization: true   # 데이터 베이스 초기화 시점을 지연 (data.sql)
     properties:
       hibernate.format_sql: true
       hibernate.dialect : org.hibernate.dialect.MySQLDialect
-  sql:
+
+  sql:      # (data.sql)
     init:
       mode : always
+
+  server:
+    port: 8080
 
 JWT_TOKEN : 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA
 
