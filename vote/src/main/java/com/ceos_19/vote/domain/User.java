@@ -30,6 +30,9 @@ public class User {
     private Part part;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
@@ -47,13 +50,14 @@ public class User {
         this.loginType = socialType;
         this.username = socialId;
     }
-    public static User of(LoginType loginType, String username, String password, UserRoleEnum role, Part part, Team team, String email) {
+    public static User of(LoginType loginType, String username, String password, UserRoleEnum role, Part part, Team team, String email, String name) {
         User user = new User(loginType, username); // 일반 로그인 타입으로 사용자 생성
         user.setPassword(password); // 패스워드 설정
         user.setRole(role); // 역할 설정
         user.setTeam(team);
         user.setPart(part);
         user.setEmail(email);
+        user.setName(name);
         return user; // 사용자 반환
     }
 }

@@ -56,7 +56,8 @@ public class UserService {
         String email = requestDto.getEmail();
         // 입력한 username, password, admin 으로 user 객체 만들어 repository 에 저장
         UserRoleEnum role = requestDto.getRole() ? UserRoleEnum.ADMIN : UserRoleEnum.USER;
-        User user = User.of(LoginType.NONE, username, password, role,part, team, email );
+        String name = requestDto.getName();
+        User user = User.of(LoginType.NONE, username, password, role,part, team, email, name );
 
         userRepository.save(user);
 
