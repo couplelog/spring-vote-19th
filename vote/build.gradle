@@ -37,7 +37,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33' // 여기 수정
-	//runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	//implementation 'com.h2database:h2'
 	testCompileOnly 'junit:junit:4.13.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -45,7 +45,6 @@ dependencies {
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2' //swagger
-
 }
 tasks.withType(JavaCompile).configureEach {
 	options.compilerArgs << '-parameters'
